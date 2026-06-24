@@ -62,19 +62,19 @@ Each tier only accepts traffic from the tier directly above it, enforcing networ
 ## Infrastructure (AWS Console)
 
 **Application Load Balancer — active with HTTPS listener**
-![ALB](screenshots/alb.png)
+![ALB](ALB.png)
 
 **Target Group — registered instances passing health checks**
-![Target Group](screenshots/target-group.png)
+![Target Group](Target_Group.png)
 
 **Auto Scaling Group**
-![ASG](screenshots/asg.png)
+![ASG](Auto_Scaling.png)
 
 **ACM Certificate — issued for seekndiscover.cajkpro.xyz**
-![ACM](screenshots/acm.png)
+![ACM](ACM_Certificate.png)
 
 **EC2 Instances — four-tier layout**
-![EC2 Instances](screenshots/ec2-instances.png)
+![EC2 Instances](EC2_Instances.png)
 
 ## HTTPS / TLS
 
