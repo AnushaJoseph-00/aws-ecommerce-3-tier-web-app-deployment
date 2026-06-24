@@ -54,9 +54,15 @@ Each tier only accepts traffic from the tier directly above it, enforcing networ
 
 ## Key Engineering Decisions
 
-- **Artifact delivery via S3** rather than building on each instance — keeps app servers stateless and makes scaling simpler.
-- **Tier isolation via security groups** — database, cache, and messaging tiers are not internet-reachable; only the app tier can reach them.
-- **Embedded Tomcat (standalone JAR)** rather than deploying a WAR into system Tomcat — simpler deployment and a single self-contained artifact.
+- **Artifact delivery via S3** rather than building on each instance : keeps app servers stateless and makes scaling simpler.
+- **Tier isolation via security groups** : database, cache, and messaging tiers are not internet-reachable; only the app tier can reach them.
+- **Embedded Tomcat (standalone JAR)** rather than deploying a WAR into system Tomcat : simpler deployment and a single self-contained artifact.
+
+## Live Application
+
+The deployed ShopHub storefront, served from the app tier through the load balancer:
+
+![ShopHub Running](Website_Running.png)
 
 ## Notes
 
