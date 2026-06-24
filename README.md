@@ -52,17 +52,51 @@ The application is split across isolated tiers, each on its own EC2 instance, wi
 
 Each tier only accepts traffic from the tier directly above it, enforcing network isolation.
 
+
 ## Key Engineering Decisions
 
 - **Artifact delivery via S3** rather than building on each instance : keeps app servers stateless and makes scaling simpler.
 - **Tier isolation via security groups** : database, cache, and messaging tiers are not internet-reachable; only the app tier can reach them.
 - **Embedded Tomcat (standalone JAR)** rather than deploying a WAR into system Tomcat : simpler deployment and a single self-contained artifact.
 
+## Infrastructure (AWS Console)
+
+**Application Load Balancer — active with HTTPS listener**
+![ALB](screenshots/alb.png)
+
+**Target Group — registered instances passing health checks**
+![Target Group](screenshots/target-group.png)
+
+**Auto Scaling Group**
+![ASG](screenshots/asg.png)
+
+**ACM Certificate — issued for seekndiscover.cajkpro.xyz**
+![ACM](screenshots/acm.png)
+
+**EC2 Instances — four-tier layout**
+![EC2 Instances](screenshots/ec2-instances.png)
+
+## HTTPS / TLS
+
+The application is served over HTTPS at **https://seekndiscover.cajkpro.xyz**, with TLS terminated at the load balancer using a certificate from **AWS Certificate Manager (ACM)**.
+
+- A public certificate was provisioned in **ACM** for `seekndiscover.cajkpro.xyz`.
+- The certificate was validated via **DNS**, with the ACM CNAME validation record added in the domain's **GoDaddy DNS management**.
+- A **CNAME record in GoDaddy** points the domain to the Application Load Balancer's DNS name.
+- The certificate is attached to an **HTTPS listener on port 443** on the ALB.
+- The ALB **terminates TLS** and forwards requests to the app tier over HTTP (port 8080) inside the private network.
+- The **port 80 listener redirects to HTTPS (443)**, ensuring all client traffic is encrypted.
+
+
 ## Live Application
 
 The deployed ShopHub storefront, served from the app tier through the load balancer:
 
 ![ShopHub Running](Website_Running.png)
+
+
+
+🔗 **Live:** https://seekndiscover.cajkpro.xyz
 
 ## Notes
 
